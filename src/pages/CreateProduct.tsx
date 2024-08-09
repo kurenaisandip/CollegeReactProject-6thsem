@@ -31,7 +31,7 @@ const formSchema = z.object({
         message: 'Title must be at least 2 characters.',
     }),
     genre: z.string().min(2, {
-        message: 'Genre must be at least 2 characters.',
+        message: 'Price must be at least 2 characters.',
     }),
     description: z.string().min(2, {
         message: 'Description must be at least 2 characters.',
@@ -41,10 +41,10 @@ const formSchema = z.object({
     }, 'Cover Image is required'),
     file: z.instanceof(FileList).refine((file) => {
         return file.length == 1;
-    }, 'Book PDF is required'),
+    }, 'File is required'),
 });
 
-const CreateBook = () => {
+const CreateProduct = () => {
     const navigate = useNavigate();
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -65,8 +65,8 @@ const CreateBook = () => {
         mutationFn: createBook,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['books'] });
-            console.log('Book created successfully');
-            navigate('/dashboard/books');
+            console.log('product created successfully');
+            navigate('/dashboard/products');
         },
     });
 
@@ -97,7 +97,7 @@ const CreateBook = () => {
                                 </BreadcrumbItem>
                                 <BreadcrumbSeparator />
                                 <BreadcrumbItem>
-                                    <BreadcrumbLink href="/dashboard/books">Books</BreadcrumbLink>
+                                    <BreadcrumbLink href="/dashboard/products">Products</BreadcrumbLink>
                                 </BreadcrumbItem>
                                 <BreadcrumbSeparator />
                                 <BreadcrumbItem>
@@ -119,9 +119,9 @@ const CreateBook = () => {
                     </div>
                     <Card className="mt-6">
                         <CardHeader>
-                            <CardTitle>Create a new book</CardTitle>
+                            <CardTitle>Create a new Product</CardTitle>
                             <CardDescription>
-                                Fill out the form below to create a new book.
+                                Fill out the form below to create a new product.
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -145,7 +145,7 @@ const CreateBook = () => {
                                     name="genre"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Genre</FormLabel>
+                                            <FormLabel>Price</FormLabel>
                                             <FormControl>
                                                 <Input type="text" className="w-full" {...field} />
                                             </FormControl>
@@ -173,7 +173,7 @@ const CreateBook = () => {
                                     name="coverImage"
                                     render={() => (
                                         <FormItem>
-                                            <FormLabel>Cover Image</FormLabel>
+                                            <FormLabel>Image</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     type="file"
@@ -191,7 +191,7 @@ const CreateBook = () => {
                                     name="file"
                                     render={() => (
                                         <FormItem>
-                                            <FormLabel>Book File</FormLabel>
+                                            <FormLabel>Scam File</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     type="file"
@@ -212,4 +212,4 @@ const CreateBook = () => {
     );
 };
 
-export default CreateBook;
+export default CreateProduct;

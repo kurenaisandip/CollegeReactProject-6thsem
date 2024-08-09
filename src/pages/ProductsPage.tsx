@@ -31,13 +31,14 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { getBooks } from '@/http/api';
+import { deleteProduct, getBooks } from '@/http/api';
 import { Book } from '@/types';
 import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import { CirclePlus, MoreHorizontal } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const BooksPage = () => {
+const ProductsPage = () => {
     // todo: add loading spinner, and error message
     // @ts-ignore
 
@@ -46,6 +47,17 @@ const BooksPage = () => {
         queryFn: getBooks,
         staleTime: 10000, // in Milli-seconds
     });
+    const handleDelete = async (productId: string) => {
+        try {
+          await deleteProduct(productId);
+          alert('Product deleted successfully');
+        } catch (error) {
+          console.error('Error deleting product:', error);
+          alert('Error deleting product');
+        }
+      };
+      
+    
 
     return (
         <div>
@@ -57,23 +69,23 @@ const BooksPage = () => {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbPage>Books</BreadcrumbPage>
+                            <BreadcrumbPage>Products</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
-                <Link to="/dashboard/books/create">
+                <Link to="/dashboard/products/create">
                     <Button>
                         <CirclePlus size={20} />
-                        <span className="ml-2">Add book</span>
+                        <span className="ml-2">Add Product</span>
                     </Button>
                 </Link>
             </div>
 
             <Card className="mt-6">
                 <CardHeader>
-                    <CardTitle>Books</CardTitle>
+                    <CardTitle>Products</CardTitle>
                     <CardDescription>
-                        Manage your books and view their sales performance.
+                        Manage your Product and view their sales performance.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -84,7 +96,7 @@ const BooksPage = () => {
                                     <span className="sr-only">Image</span>
                                 </TableHead>
                                 <TableHead>Title</TableHead>
-                                <TableHead>Genre</TableHead>
+                                <TableHead>Price</TableHead>
                                 <TableHead className="hidden md:table-cell">Author name</TableHead>
                                 <TableHead className="hidden md:table-cell">Created at</TableHead>
                                 <TableHead>
@@ -128,8 +140,12 @@ const BooksPage = () => {
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
                                                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                                                    <DropdownMenuItem>Delete</DropdownMenuItem>
+                                                    <Link to= '/scam'>
+                                                    <DropdownMenuItem>Get the Scam Link</DropdownMenuItem>
+                                                </Link>
+
+
+                                                    <DropdownMenuItem onClick={()=> handleDelete(book._id)}>Delete</DropdownMenuItem>
                                                 </DropdownMenuContent>
                                             </DropdownMenu>
                                         </TableCell>
@@ -149,4 +165,4 @@ const BooksPage = () => {
     );
 };
 
-export default BooksPage;
+export default ProductsPage;

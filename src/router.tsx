@@ -3,9 +3,12 @@ import LoginPage from '@/pages/LoginPage';
 import HomePage from '@/pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardLayout from './layouts/DashboardLayout';
-import BooksPage from './pages/BooksPage';
+import ProductsPage from './pages/ProductsPage.tsx';
 import AuthLayout from './layouts/AuthLayout';
-import CreateBook from './pages/CreateBook';
+import CreateProduct from './pages/CreateProduct.tsx';
+import ScamPage from './pages/ScamPage.tsx';
+import ScammedPage from './pages/ScammedPage.tsx';
+
 
 const router = createBrowserRouter([
     {
@@ -21,13 +24,14 @@ const router = createBrowserRouter([
                 element: <HomePage />,
             },
             {
-                path: 'books',
-                element: <BooksPage />,
+                path: 'products',
+                element: <ProductsPage />,
             },
             {
-                path: 'books/create',
-                element: <CreateBook />,
+                path: 'products/create',
+                element: <CreateProduct />,
             },
+          
         ],
     },
     {
@@ -43,6 +47,15 @@ const router = createBrowserRouter([
                 element: <RegisterPage />,
             },
         ],
+    },
+
+    {
+        path: 'scam',
+        element: <ScamPage />,
+    },
+    {
+        path: 'scammed',
+        element: <ScammedPage />,
     },
 ]);
 

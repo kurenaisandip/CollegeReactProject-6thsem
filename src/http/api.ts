@@ -1,5 +1,6 @@
 import axios from 'axios';
 import useTokenStore from '@/store';
+import { promise } from 'zod';
 
 const api = axios.create({
     // todo: move this value to env variable.
@@ -31,3 +32,31 @@ export const createBook = async (data: FormData) =>
             'Content-Type': 'multipart/form-data',
         },
     });
+
+//export const getProductById = async (productId: string) => api.get(`/api/books/${productId}`);
+
+
+export const getUserById = (productId:string) => {
+    const BASE_URL =  'http://localhost:5513/api/books';
+    return new Promise((resolve, reject) => {
+      axios.get(`${BASE_URL}/${productId}`)
+          .then((res) => {
+            resolve(res.data);
+          }).catch((err) => {
+            reject(err);
+          })
+    });
+  }
+
+
+  export const deleteProduct = (productId:string) => {
+    const BASE_URL =  'http://localhost:5513/api/books';
+    return new Promise((resolve, reject) => {
+      axios.delete(`${BASE_URL}/${productId}`)
+          .then(() => {
+            resolve(true);
+          }).catch((err) => {
+            reject(err);
+          })
+    });
+  }
